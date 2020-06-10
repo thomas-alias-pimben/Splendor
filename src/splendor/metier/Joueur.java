@@ -4,10 +4,22 @@ import java.util.ArrayList;
 
 public class Joueur 
 {
+	//pseudo du joueur
     private String nom;
-    private int[] listJeton; //blanc=0 bleu=1  marron=2 rouge=3 vert=4 jaune=5
+    
+    //ensemble de quantité de jeuton par couleur
+    //0 pour blanc
+    //1 pour bleu
+    //2 pour marron
+    //3 pour rouge
+    //4 pour vert
+    //5 pour jaune
+    private int[] listJeton; 
 
+    //liste de Carte du joueur
     private ArrayList<Carte> listCarte;
+    
+    //nombre de  point accumulé par le joueur
     private int              nbPoint;
 
     public Joueur(String nom)
@@ -26,26 +38,44 @@ public class Joueur
 
     }
 
+    /**
+     * @return le nombre de jeton blanc
+     */
 	public int getNbBlanc() {
 		return listJeton[0];
 	}    
     
+    /**
+     * @return le nombre de jeton bleu
+     */
 	public int getNbBleu() {
 		return listJeton[1];
 	}   
 	
+    /**
+     * @return le nombre de jeton marron
+     */
 	public int getNbMarron() {
 		return listJeton[2];
 	}   
 	
+    /**
+     * @return le nombre de jeton rouge
+     */
 	public int getNbRouge() {
 		return listJeton[3];
 	}   
 	
+    /**
+     * @return le nombre de jeton vert
+     */
 	public int getNbVert() {
 		return listJeton[4];
 	}   
 	
+    /**
+     * @return le nombre de jeton jaune
+     */
 	public int getNbJaune() {
 		return listJeton[5];
 	}   

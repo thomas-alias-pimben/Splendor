@@ -1,30 +1,47 @@
 package splendor.metier;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.swing.ImageIcon;
 
 import splendor.Controleur;
 
+/**
+ * Classe Jeu
+ * classe qui gère le métier
+ * @author 
+ *
+ */
 public class Jeu implements Serializable
 {
 
-	// 0 niveau 1, 1 niveau 2, 2 niveau 3, 3 noble
+	//ensemble des decks
+	// 0 pour niveau 1,
+    // 1 pour niveau 2, 
+    // 2 pour niveau 3, 
+    // 3 pour noble
     private Deck[] decks;
 
-    private int[] ensJetons; //blanc=0 bleu=1 marron=2 rouge=3 vert=4 jaune=5
+    //ensemble de quantité de jeuton par couleur
+    //0 pour blanc
+    //1 pour bleu
+    //2 pour marron
+    //3 pour rouge
+    //4 pour vert
+    //5 pour jaune
+    private int[] ensJetons; 
 
-    private ArrayList<Carte> alCarte;
-    
+    //ensemble de carte du plateau
+    //0 pour la ligne 
+    //1 pour la ligne 
+    //2 pour la ligne 
     private Carte[][] ensCarte = new Carte[3][4];
+    
+    //ensemble de carte noble du plateau
     private Carte[] ensCarteNoble = new Carte[3];
 
     private Joueur j1;
     private Joueur j2;
-
-    private Initialisation initDeck;
 
     private Controleur ctrl;
 
@@ -32,7 +49,7 @@ public class Jeu implements Serializable
     public Jeu ( Controleur ctrl )
     {
         this.ctrl = ctrl;
-        this.initDeck = new Initialisation();
+        new Initialisation();
         initJeu();
 
         /*while ( !j1.aAuMoins15Points() || !j2.aAuMoins15Points() )
@@ -42,6 +59,9 @@ public class Jeu implements Serializable
     }
 
     //methodes
+    /**
+     * Apelle toute les méthodes d'initialisation
+     */
     public void initJeu ()
     {
         initJeton();
@@ -49,6 +69,9 @@ public class Jeu implements Serializable
         initCarte();
     }
 
+    /**
+     * Initialise les jetons pour une partie classique
+     */
     public void initJeton ()
     {
         this.ensJetons = new int[6];
@@ -62,12 +85,18 @@ public class Jeu implements Serializable
             this.ctrl.getPanelPlateau().getEnsNbJeton()[i].setText ( "" + this.ensJetons[i] );
     }
 
+    /**
+     * Initialise les joueurs
+     */
     public void initJoueur ()
     {
         this.j1 = new Joueur("J1");
         this.j2 = new Joueur("J2");
     }
 
+    /**
+     * Initialise les decks et le plateau pour une partie classique
+     */
     public void initCarte ()
     {
     	Carte[][] ensDeck = null;
@@ -207,17 +236,35 @@ public class Jeu implements Serializable
         }
     }*/
 
+    /**
+     * Mélange tout les decks
+     */
     public void melanger()
     {
         for ( Deck temp:decks )
         	temp.melanger();
     }
 
+    /**
+     * Retourne la Carte pour un deck choisi
+     * 0 pour niveau 1,
+     * 1 pour niveau 2, 
+     * 2 pour niveau 3, 
+     * 3 pour noble
+     * @param niveauDeck id du deck, entre 0 et 3
+     * @return la Carte au dessus du deck choisi 
+     */
     public Carte piocher ( int niveauDeck )
     {
         return decks[niveauDeck].depiler();
     }
 
+    /**
+     * Retourne le joueur souhaité
+     * 1 pour le joueur 1, par défaut joueur 2
+     * @param numJoueur numéro du joueur souhaité
+     * @return le Joueur
+     */
     public Joueur getJoueur ( int numJoueur ) 
     { 
         if ( numJoueur == 1 ) 
