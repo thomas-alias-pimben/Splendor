@@ -2,17 +2,15 @@ package splendor.metier;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Initialisation
 {
-  private ArrayList Deck1 = new ArrayList<Carte>();
-  private ArrayList Deck2 = new ArrayList<Carte>();
-  private ArrayList Deck3 = new ArrayList<Carte>();
-  private ArrayList DeckN = new ArrayList<Carte>();
+  private ArrayList<Carte> Deck1 = new ArrayList<Carte>();
+  private ArrayList<Carte> Deck2 = new ArrayList<Carte>();
+  private ArrayList<Carte> Deck3 = new ArrayList<Carte>();
+  private ArrayList<Carte> DeckN = new ArrayList<Carte>();
   
   private static int iD = 0;
 
@@ -54,7 +52,7 @@ public class Initialisation
         System.out.println("test");
         switch(iIndice)
         {
-          case 0:
+          case 4:
             this.DeckN.add(new Carte(this.iD,strLienImage,iCoutRouge,iCoutBleu,iCoutVert,iCoutNoir,iCoutBlanc,iPntPrestige, ""));
             System.out.println("Carte Noble cree");
             break;
@@ -75,11 +73,14 @@ public class Initialisation
             break;
         }
       }
+      
+      sc.close();
     }
     catch(Exception e)
     {
 
     }
+    
   }
 
   public ArrayList<Carte> getDeck1()
