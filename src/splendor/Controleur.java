@@ -4,6 +4,7 @@ import splendor.ihm.FrameJoueur;
 import splendor.ihm.FramePlateau;
 import splendor.ihm.PanelPlateau;
 import splendor.metier.Jeu;
+import java.io.*;
 
 public class Controleur 
 {
@@ -41,6 +42,36 @@ public class Controleur
     
     public Jeu getJeu() { return this.jeu; }
     public PanelPlateau getPanelPlateau() { return this.framePlateau.getPanelPlateau(); }
+
+    public void sauvegarder(String nomFichier)
+    {
+        try 
+        {
+            ObjectOutputStream out = new ObjectOutputStream(  new FileOutputStream( (nomFichier + ".data") )  );//l'objet qui écrit dans "nomfichier".dat
+
+            out.writeObject(jeu);//on crée l'objet dans "nomfichier".dat
+            out.close();
+        } 
+        catch (Exception e) 
+        {
+            System.out.println(e);
+        }
+
+    }
+
+    public void charger(String nomFichier)
+    {
+        try {
+
+             ObjectInputStream in = new ObjectInputStream(  new FileInputStream( (nomFichier + ".data") )  );//l'objet qui lit "nomfichier".dat
+
+             this.jeu = (Jeu)in.readObject();//on lit l'objet de "nomfichier".dat
+             in.close();
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
     public static void main ( String[] args )
     {
