@@ -11,14 +11,8 @@ import splendor.Controleur;
 public class Jeu implements Serializable
 {
 
-    // ensemble de Carte de niveau 1
-    private ArrayList<Carte> deckC1;
-    // ensemble de Carte de niveau 2
-    private ArrayList<Carte> deckC2;
-    // ensemble de Carte de niveau 3
-    private ArrayList<Carte> deckC3;
-    // ensemble de Carte Noble
-    private ArrayList<Carte> deckN;
+	// 0 niveau 1, 1 niveau 2, 2 niveau 3, 3 noble
+    private Deck[] decks;
 
     private int[] ensJetons; //blanc=0 bleu=1 marron=2 rouge=3 vert=4 jaune=5
 
@@ -76,12 +70,20 @@ public class Jeu implements Serializable
 
     public void initCarte ()
     {
-        this.deckC1 = this.initDeck.getDeck1();
-        this.deckC2 = this.initDeck.getDeck2();
-        this.deckC3 = this.initDeck.getDeck3();
-        this.deckN = this.initDeck.getDeckN();
-        //this.alCarte = new ArrayList<Carte>();
-
+    	Carte[][] ensDeck = null;
+    	try {
+    		ensDeck = Parser.getDeck();
+		} catch (Exception e) {}
+    	
+    	this.decks = new Deck[4];
+    	for ( int i=0; i<4; i++)
+    		decks[i] = new Deck();
+    	
+    	for ( int i=0; i<4; i++ )
+    		for( Carte carteTemp:ensDeck[i] )
+    			decks[i].empiler(carteTemp);
+        
+    	
         melanger();
 
         for ( int i = 0; i < 3; i++ )
@@ -89,15 +91,15 @@ public class Jeu implements Serializable
             for ( int j = 0; j < 4; j++ )
             {
                 if ( i == 0 )
-                    this.ensCarte[i][j] = piocher ( this.deckC3 );
+                    this.ensCarte[i][j] = piocher ( 2 );
                 if ( i == 1 )
-                    this.ensCarte[i][j] = piocher ( this.deckC2 );
+                    this.ensCarte[i][j] = piocher ( 1 );
                 if ( i == 2 )
-                    this.ensCarte[i][j] = piocher ( this.deckC1 );
+                    this.ensCarte[i][j] = piocher ( 0 );
 
                 this.ctrl.getPanelPlateau().getEnsJLabelC()[i][j].setIcon ( new ImageIcon ( this.ensCarte[i][j].getLien() ) );
             }
-            this.ensCarteNoble[i] = piocher ( this.deckN );
+            this.ensCarteNoble[i] = piocher ( 3 );
             this.ctrl.getPanelPlateau().getEnsJLabelN()[i].setIcon ( new ImageIcon ( this.ensCarteNoble[i].getLien() ) );
         }
     }
@@ -207,17 +209,13 @@ public class Jeu implements Serializable
 
     public void melanger()
     {
-        Collections.shuffle(this.deckC1);
-        Collections.shuffle(this.deckC2);
-        Collections.shuffle(this.deckC3);
-        Collections.shuffle(this.deckN);
+        for ( Deck temp:decks )
+        	temp.melanger();
     }
 
-    public Carte piocher ( ArrayList<Carte> alCarte )
+    public Carte piocher ( int niveauDeck )
     {
-        Carte tmpCarte = alCarte.get ( alCarte.size() - 1 );
-        alCarte.remove ( tmpCarte );
-        return tmpCarte;
+        return decks[niveauDeck].depiler();
     }
 
     public Joueur getJoueur ( int numJoueur ) 
