@@ -1,5 +1,6 @@
 package splendor.metier;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,7 +8,7 @@ import javax.swing.ImageIcon;
 
 import splendor.Controleur;
 
-public class Jeu 
+public class Jeu implements Serializable
 {
 
     // ensemble de Carte de niveau 1
